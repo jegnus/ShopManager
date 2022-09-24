@@ -1,5 +1,5 @@
 {
-  "name": "shop_manager",
+  "name": "ShopManager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
