@@ -67,7 +67,14 @@ function Order() {
         getOrders()
     }, [])
 
+    const  logout = async () => {
+        console.log("logout")
 
+        localStorage.clear()
+        window.location.reload(false);
+
+
+    }
     const handlePrint = () => {
 
         let printContents = document.getElementById('printablediv').innerHTML;
@@ -87,8 +94,16 @@ function Order() {
                 show={showOrderDetailModal}
                 onHide={() => setShowOrderDetailModal(false)}
             /> */}
+            <button style={{
+                position:"absolute",
+                fontSize: 16, textAlign: 'center'}}
+                    onClick={() => {
+                        logout()
+                    }}
+            >Logout</button>
 
             <h1 style={{fontSize: 30, textAlign: 'center', margin: '1em 0'}}>Shop Manager</h1>
+
             <div className='row' style={{}}>
                 <div className='col-lg-5'>
                     <div style={{
@@ -239,7 +254,7 @@ function Order() {
                                             }}>{selectedOrder.orderStatus}</span></p>
                                         </div>
                                         <div>
-                                            <p style={{margin: 0}}>Date: 02/05/2022</p>
+                                            <p style={{margin: 0}}>Date: {selectedOrder.orderDate}</p>
                                             <p style={{margin: 0}}>Time: {moment('2022-05-02 ' + selectedOrder.orderTime).format('hh:mm A')}</p>
                                         </div>
                                     </div>
