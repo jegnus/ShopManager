@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { gql } from "@apollo/client";
 import { client } from "../../Features/Client";
 import OrderDetailsModal from './OrderDetailsModal';
+import moment from 'moment'
 
 function Order() {
     const [username, setusername] = useState(localStorage.getItem('user'))
@@ -9,6 +10,7 @@ function Order() {
     const [loading, setloading] = React.useState(true)
     const [showOrderDetailModal, setShowOrderDetailModal] = useState(false)
     const [selectedOrder, setSelectedOrder] = useState({})
+
     console.log(username)
     const getOrders = async () => {
         const getOrders = gql`
@@ -20,12 +22,20 @@ function Order() {
                 orderlist{
                     id
                     orderTime
+                    orderStatus
                     orderedItems{
                     id
                     foodName
                     foodPrice
                     quantity
-                  }
+                    }
+                    travelLog{
+                        id
+                        Date
+                        AssignedTime
+                        CompleteTime
+
+                    }
                     
                 }
             }
@@ -45,21 +55,269 @@ function Order() {
     }, [])
 
 
+    const handlePrint = () => {
 
+        let printContents = document.getElementById('printablediv').innerHTML;
+        let originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+
+    }
 
 
 
     return (
 
         <div className='container'>
-            <OrderDetailsModal
+            {/* <OrderDetailsModal
                 orderdetails={selectedOrder}
                 show={showOrderDetailModal}
                 onHide={() => setShowOrderDetailModal(false)}
-            />
+            /> */}
 
-            <h1>Orders</h1>
+            <h1 style={{ fontSize: 30, textAlign: 'center', margin: '1em 0' }}>Shop Manager</h1>
+            <div className='row' style={{}}>
+                <div className='col-lg-5' >
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: 20
 
+                    }}>
+                        <h3 style={{ margin: 0 }}>Orders</h3>
+                        <div >
+                            <label
+                                style={{ marginRight: 10 }}
+                                htmlFor='dateFilter'
+                            >filter</label>
+                            <input
+                                id='dateFilter'
+                                type={'date'}
+                            ></input>
+                        </div>
+
+                    </div>
+                    <div style={{
+
+                        height: '80vh',
+                        overflowY: 'scroll'
+                    }}>
+
+                        {
+                            orders.length > 0 ?
+                                orders.map((order) => {
+                                    console.log(order.travelLog.length > 0 ? order.travelLog[0].Date : '')
+                                    return (
+                                        <div
+                                            key={order.id}
+
+                                            onClick={() => {
+                                                setSelectedOrder({ ...order })
+                                            }}
+                                            style={{
+                                                justifyContent: 'space-between',
+                                                display: 'flex', flexDirection: 'row', margin: 10,
+                                                backgroundColor: selectedOrder.id === order.id ? '#fff0b6' : 'WHITE',
+                                                borderRadius: 8,
+                                                padding: 10,
+                                                cursor: 'pointer',
+                                                boxShadow: '1px 2px 5px 1px rgba(0,0,0, 0.15)'
+                                            }}>
+                                            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                <div style={{ height: '100%', display: 'flex', alignItems: 'center', }}>
+
+                                                    <div style={{
+                                                        height: 30,
+                                                        width: 8,
+                                                        backgroundColor: order.orderStatus === 'Preparing' ? '#00D1FF' : order.orderStatus === 'Cancelled' ? 'red' : 'green',
+                                                        marginRight: 10,
+                                                        borderRadius: 5
+                                                    }}></div>
+                                                </div>
+                                                <p style={{ fontWeight: '700' }}>sdasda2r23412{order.id}</p>
+                                            </div>
+                                            <div>
+                                                <p style={{ margin: 0, fontSize: '0.9em' }}>{'12/08/2022'}</p>
+                                                <p style={{ margin: 0, fontSize: '0.9em' }}>{order.orderedItems.length} items</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                                : null
+                        }
+
+
+                    </div>
+                </div>
+                <div className='col-lg-7' >
+                    {
+                        Object.keys(selectedOrder).length > 0 ?
+
+                            <div>
+
+                                <button
+
+                                    style={{
+                                        border: '1px solid black',
+                                        borderRadius: 5,
+                                        backgroundColor: 'white',
+                                        padding: '0 1em',
+                                        margin: 10,
+                                        color: '#fb6c3e',
+                                        fontWeight: '700',
+
+
+                                    }}
+                                    onClick={() => {
+                                        handlePrint()
+                                    }}
+                                >Print</button>
+                                <div
+                                    id='printablediv'
+
+                                    style={{
+
+                                        border: '1px solid black',
+                                        height: '80vh',
+                                        borderRadius: 5,
+                                        margin: 10,
+                                        padding: 10
+                                    }}
+                                >
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between'
+                                    }}>
+                                        <div>
+                                            <p style={{ margin: 0, fontWeight: '700' }}>Order id: 234245242142424{selectedOrder.id}</p>
+                                            <p style={{ margin: 0, fontWeight: '700' }}>Status: <span style={{
+                                                color: selectedOrder.orderStatus === 'Preparing' ? '#00D1FF' : selectedOrder.orderStatus === 'Cancelled' ? 'red' : 'green',
+                                            }}>{selectedOrder.orderStatus}</span> </p>
+                                        </div>
+                                        <div>
+                                            <p style={{ margin: 0 }}>Date: 02/05/2022</p>
+                                            <p style={{ margin: 0 }}>Time: {moment('2022-05-02 ' + selectedOrder.orderTime).format('hh:mm A')}</p>
+                                        </div>
+                                    </div>
+
+                                    {
+                                        selectedOrder.orderStatus !== 'Cancelled' ?
+                                            <div style={{ display: 'flex', flexDirection: 'row', marginTop: 40 }}>
+                                                <div style={{ display: 'flex', flexDirection: 'column', }}>
+                                                    {/* <div
+                                    style={{ height: 50 }}
+                                ></div> */}
+                                                    <div style={{ display: 'flex', flexDirection: 'row', width: 200, alignItems: 'center' }}>
+                                                        <img
+                                                            src={selectedOrder.orderStatus === 'Preparing' || selectedOrder.orderStatus === 'Picked' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                            style={{ width: 50, height: 50 }}
+                                                        >
+                                                        </img>
+
+                                                        <p style={{ margin: 0, marginLeft: 10 }}>Recieved</p>
+                                                    </div>
+                                                    <div style={{ height: 80, width: 1, backgroundColor: 'black', margin: 10, marginLeft: 25 }}>
+
+                                                    </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'row', width: 200, alignItems: 'center' }}>
+
+                                                        <img
+                                                            src={selectedOrder.orderStatus === 'Picked' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                            style={{ width: 50, height: 50 }}
+                                                        >
+                                                        </img>
+                                                        <p style={{ margin: 0, marginLeft: 10 }}>PickedUp</p>
+                                                    </div>
+                                                    <div style={{ height: 80, width: 1, backgroundColor: 'black', margin: 10, marginLeft: 25 }}>
+
+                                                    </div>
+                                                    <div style={{ display: 'flex', flexDirection: 'row', width: 200, alignItems: 'center' }}>
+
+                                                        <img
+                                                            src={selectedOrder.orderStatus === 'Delivered' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                            style={{ width: 50, height: 50 }}
+                                                        >
+                                                        </img>
+                                                        <p style={{ margin: 0, marginLeft: 10 }}>Delivered</p>
+                                                    </div>
+                                                    <div
+                                                        style={{ height: 10 }}
+                                                    ></div>
+                                                </div>
+                                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                                    <div style={{ height: 150 }}>
+                                                        <p>Rcvd Time: 12:30pm </p>
+                                                        <p>Driver id:12123</p>
+                                                        <p>Driver name: mark</p>
+                                                    </div>
+
+                                                    <div style={{ height: 150, borderTop: '1px solid black', borderBottom: '1px solid black', paddingTop: 10, marginBottom: 10 }}>
+                                                        <div>
+
+                                                            <p>Pickup Time: 12:30pm</p>
+                                                            <img
+                                                                src=''
+                                                                style={{ height: '100%', width: 100 }}
+                                                                alt={'image'}
+                                                            ></img>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div style={{ height: 100 }}>
+                                                        <p>Pickup Time: 12:30pm</p>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            : null
+                                    }
+                                    <div style={{ marginTop: 20 }}>
+                                        <h5 style={{ fontWeight: '700' }}>Items: </h5>
+                                        <div
+
+                                            style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '60%' }}>
+                                                <p style={{ fontWeight: '700' }}>Id</p>
+                                                <p style={{ fontWeight: '700' }}>Qty</p>
+                                                <p style={{ fontWeight: '700' }}>Name</p>
+                                            </div>
+                                            <p style={{ fontWeight: '700' }}>£ Price</p>
+                                        </div>
+                                        {
+                                            selectedOrder.orderedItems ?
+                                                selectedOrder.orderedItems.map((item) => {
+                                                    return (
+                                                        <div
+                                                            key={item.id}
+                                                            style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '60%' }}>
+                                                                <p>{item.id}</p>
+                                                                <p>{item.quantity}</p>
+                                                                <p>{item.foodName}</p>
+                                                            </div>
+                                                            <p>£{item.foodPrice}</p>
+                                                        </div>
+                                                    )
+                                                }) : null
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            :
+                            <div>
+                                <p style={{ textAlign: 'center', marginTop: 20 }}>Please Select an Order</p>
+                            </div>
+                    }
+
+                </div>
+            </div>
+
+            {/* 
             <table className="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -110,7 +368,7 @@ function Order() {
 
 
                 </tbody>
-            </table>
+            </table> */}
 
 
 

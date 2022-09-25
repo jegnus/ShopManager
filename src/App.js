@@ -1,11 +1,11 @@
-import './App.css';
+// import './App.css';
 import Base from './projectFiles/Base';
 
 function App() {
   return (
-      <div className="App">
-        <Base/>
-      </div>
+    <div className="App">
+      <Base />
+    </div>
   );
 }
 
