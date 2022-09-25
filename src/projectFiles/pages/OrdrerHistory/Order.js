@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {gql} from "@apollo/client";
-import {client} from "../../Features/Client";
+import React, { useEffect, useRef, useState } from 'react'
+import { gql } from "@apollo/client";
+import { client } from "../../Features/Client";
 import OrderDetailsModal from './OrderDetailsModal';
 import moment from 'moment'
 
@@ -53,7 +53,7 @@ function Order() {
 
             }
         `
-        const {data} = await client.query({
+        const { data } = await client.query({
             query: getOrders
         })
         console.log(data)
@@ -67,7 +67,7 @@ function Order() {
         getOrders()
     }, [])
 
-    const  logout = async () => {
+    const logout = async () => {
         console.log("logout")
 
         localStorage.clear()
@@ -95,14 +95,15 @@ function Order() {
                 onHide={() => setShowOrderDetailModal(false)}
             /> */}
             <button style={{
-                position:"absolute",
-                fontSize: 16, textAlign: 'center'}}
-                    onClick={() => {
-                        logout()
-                    }}
+                position: "absolute",
+                fontSize: 16, textAlign: 'center'
+            }}
+                onClick={() => {
+                    logout()
+                }}
             >Logout</button>
 
-            <h1 style={{fontSize: 30, textAlign: 'center', margin: '1em 0'}}>Shop Manager</h1>
+            <h1 style={{ fontSize: 30, textAlign: 'center', margin: '1em 0' }}>Shop Manager</h1>
 
             <div className='row' style={{}}>
                 <div className='col-lg-5'>
@@ -113,10 +114,10 @@ function Order() {
                         marginBottom: 20
 
                     }}>
-                        <h3 style={{margin: 0}}>Orders</h3>
+                        <h3 style={{ margin: 0 }}>Orders</h3>
                         <div>
                             <label
-                                style={{marginRight: 10}}
+                                style={{ marginRight: 10 }}
                                 htmlFor='dateFilter'
                             >filter</label>
                             <input
@@ -176,8 +177,8 @@ function Order() {
                                                 cursor: 'pointer',
                                                 boxShadow: '1px 2px 5px 1px rgba(0,0,0, 0.15)'
                                             }}>
-                                            <div style={{display: 'flex', flexDirection: 'row'}}>
-                                                <div style={{height: '100%', display: 'flex', alignItems: 'center',}}>
+                                            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                <div style={{ height: '100%', display: 'flex', alignItems: 'center', }}>
 
                                                     <div style={{
                                                         height: 30,
@@ -187,10 +188,10 @@ function Order() {
                                                         borderRadius: 5
                                                     }}></div>
                                                 </div>
-                                                <p style={{fontWeight: '700'}}>sdasda2r23412{order.id}</p>
+                                                <p style={{ fontWeight: '700' }}>sdasda2r23412{order.id}</p>
                                             </div>
                                             <div>
-                                                <p style={{margin: 0, fontSize: '0.9em'}}>{order.orderDate}</p>
+                                                <p style={{ margin: 0, fontSize: '0.9em' }}>{order.orderDate}</p>
                                                 <p style={{
                                                     margin: 0,
                                                     fontSize: '0.9em'
@@ -235,7 +236,7 @@ function Order() {
                                     style={{
 
                                         border: '1px solid black',
-                                        height: '80vh',
+                                        minHeight: '80vh',
                                         borderRadius: 5,
                                         margin: 10,
                                         padding: 10
@@ -247,22 +248,22 @@ function Order() {
                                         justifyContent: 'space-between'
                                     }}>
                                         <div>
-                                            <p style={{margin: 0, fontWeight: '700'}}>Order id:
+                                            <p style={{ margin: 0, fontWeight: '700' }}>Order id:
                                                 234245242142424{selectedOrder.id}</p>
-                                            <p style={{margin: 0, fontWeight: '700'}}>Status: <span style={{
+                                            <p style={{ margin: 0, fontWeight: '700' }}>Status: <span style={{
                                                 color: selectedOrder.orderStatus === 'Preparing' ? '#00D1FF' : selectedOrder.orderStatus === 'Cancelled' ? 'red' : 'green',
                                             }}>{selectedOrder.orderStatus}</span></p>
                                         </div>
                                         <div>
-                                            <p style={{margin: 0}}>Date: {selectedOrder.orderDate}</p>
-                                            <p style={{margin: 0}}>Time: {moment('2022-05-02 ' + selectedOrder.orderTime).format('hh:mm A')}</p>
+                                            <p style={{ margin: 0 }}>Date: {selectedOrder.orderDate}</p>
+                                            <p style={{ margin: 0 }}>Time: {moment('2022-05-02 ' + selectedOrder.orderTime).format('hh:mm A')}</p>
                                         </div>
                                     </div>
 
                                     {
                                         selectedOrder.orderStatus !== 'Cancelled' ?
-                                            <div style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
-                                                <div style={{display: 'flex', flexDirection: 'column',}}>
+                                            <div style={{ display: 'flex', flexDirection: 'row', marginTop: 40 }}>
+                                                <div style={{ display: 'flex', flexDirection: 'column', }}>
                                                     {/* <div
                                     style={{ height: 50 }}
                                 ></div> */}
@@ -274,11 +275,11 @@ function Order() {
                                                     }}>
                                                         <img
                                                             src={selectedOrder.orderStatus === 'Preparing' || selectedOrder.orderStatus === 'Prepared' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
-                                                            style={{width: 50, height: 50}}
+                                                            style={{ width: 50, height: 50 }}
                                                         >
                                                         </img>
 
-                                                        <p style={{margin: 0, marginLeft: 10}}>Recieved</p>
+                                                        <p style={{ margin: 0, marginLeft: 10 }}>Recieved</p>
                                                     </div>
                                                     <div style={{
                                                         height: 80,
@@ -297,11 +298,11 @@ function Order() {
                                                     }}>
                                                         <img
                                                             src={selectedOrder.orderStatus === 'Prepared' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
-                                                            style={{width: 50, height: 50}}
+                                                            style={{ width: 50, height: 50 }}
                                                         >
                                                         </img>
 
-                                                        <p style={{margin: 0, marginLeft: 10}}>Prepared</p>
+                                                        <p style={{ margin: 0, marginLeft: 10 }}>Prepared</p>
                                                     </div>
                                                     <div style={{
                                                         height: 80,
@@ -324,10 +325,10 @@ function Order() {
 
                                                             <img
                                                                 src={pickupTask.status === 'Completed' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
-                                                                style={{width: 50, height: 50}}
+                                                                style={{ width: 50, height: 50 }}
                                                             >
                                                             </img>
-                                                            <p style={{margin: 0, marginLeft: 10}}>PickedUp</p>
+                                                            <p style={{ margin: 0, marginLeft: 10 }}>PickedUp</p>
                                                         </div>
                                                         : null
                                                     }
@@ -352,26 +353,26 @@ function Order() {
 
                                                                 <img
                                                                     src={deliveryTask.status === 'Completed' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
-                                                                    style={{width: 50, height: 50}}
+                                                                    style={{ width: 50, height: 50 }}
                                                                 >
                                                                 </img>
-                                                                <p style={{margin: 0, marginLeft: 10}}>Delivered</p>
+                                                                <p style={{ margin: 0, marginLeft: 10 }}>Delivered</p>
                                                             </div>
                                                             : null
                                                     }
                                                     <div
-                                                        style={{height: 10}}
+                                                        style={{ height: 10 }}
                                                     ></div>
 
 
                                                 </div>
-                                                <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                                                    <div style={{height: 150}}>
+                                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                                    <div style={{ height: 150 }}>
                                                         <p>Order
                                                             Time: {selectedOrder.orderTime.toString().split(".")[0]} </p>
                                                     </div>
 
-                                                    <div style={{height: 150}}>
+                                                    <div style={{ height: 150 }}>
                                                         {selectedOrder.orderStatus === 'Prepared' ?
                                                             <p>Prepare
                                                                 Time:{selectedOrder.estimatedCompletionTime.toString().split(".")[0]} </p>
@@ -392,7 +393,7 @@ function Order() {
                                                                     {pickupTask.status === 'Completed' ? <p>Pickup Time: {pickupTask.CompleteTime}</p> : <p>Pickup Time: </p>}
                                                                     <img
                                                                         src={"https://storage.googleapis.com/locus_image_store/" + pickupTask.Image}
-                                                                        style={{height: '100%', width: 100}}
+                                                                        style={{ height: '100%', width: 100 }}
                                                                         alt={'image'}
                                                                     ></img>
                                                                 </div>
@@ -403,11 +404,11 @@ function Order() {
                                                     }
                                                     {
                                                         deliveryTask ?
-                                                            <div style={{height: 100}}>
+                                                            <div style={{ height: 100 }}>
                                                                 {deliveryTask.status === 'Completed' ? <p>Delivery Time:{deliveryTask.CompleteTime} </p> : <p>Delivery Time : </p>}
                                                                 <img
                                                                     src={"https://storage.googleapis.com/locus_image_store/" + deliveryTask.Image}
-                                                                    style={{height: '100%', width: 100}}
+                                                                    style={{ height: '100%', width: 100 }}
                                                                     alt={'image'}
                                                                 ></img>
                                                             </div>
@@ -418,21 +419,21 @@ function Order() {
                                             </div>
                                             : null
                                     }
-                                    <div style={{marginTop: 20}}>
-                                        <h5 style={{fontWeight: '700'}}>Items: </h5>
+                                    <div style={{ marginTop: 20 }}>
+                                        <h5 style={{ fontWeight: '700' }}>Items: </h5>
                                         <div
 
-                                            style={{display: 'flex', justifyContent: 'space-between'}}>
+                                            style={{ display: 'flex', justifyContent: 'space-between' }}>
                                             <div style={{
                                                 display: 'flex',
                                                 justifyContent: 'space-between',
                                                 width: '60%'
                                             }}>
-                                                <p style={{fontWeight: '700'}}>Id</p>
-                                                <p style={{fontWeight: '700'}}>Qty</p>
-                                                <p style={{fontWeight: '700'}}>Name</p>
+                                                <p style={{ fontWeight: '700' }}>Id</p>
+                                                <p style={{ fontWeight: '700' }}>Qty</p>
+                                                <p style={{ fontWeight: '700' }}>Name</p>
                                             </div>
-                                            <p style={{fontWeight: '700'}}>£ Price</p>
+                                            <p style={{ fontWeight: '700' }}>£ Price</p>
                                         </div>
                                         {
                                             selectedOrder.orderedItems ?
@@ -440,7 +441,7 @@ function Order() {
                                                     return (
                                                         <div
                                                             key={item.id}
-                                                            style={{display: 'flex', justifyContent: 'space-between'}}>
+                                                            style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                             <div style={{
                                                                 display: 'flex',
                                                                 justifyContent: 'space-between',
@@ -460,7 +461,7 @@ function Order() {
                             </div>
                             :
                             <div>
-                                <p style={{textAlign: 'center', marginTop: 20}}>Please Select an Order</p>
+                                <p style={{ textAlign: 'center', marginTop: 20 }}>Please Select an Order</p>
                             </div>
                     }
 
