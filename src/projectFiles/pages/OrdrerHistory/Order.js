@@ -135,7 +135,7 @@ function Order() {
 
                                             onClick={() => {
                                                 console.log(order)
-                                                if(order.travelLog.length>0) {
+                                                if (order.travelLog.length > 0) {
                                                     console.log(order.travelLog.length)
                                                     let pickup = order.travelLog.filter((task) => {
                                                         return task.PointType === "Pickup"
@@ -145,8 +145,7 @@ function Order() {
                                                     })
                                                     setpickupTask(pickup[0])
                                                     setdeliveryTask(delivery[0])
-                                                }
-                                                else {
+                                                } else {
                                                     setpickupTask({})
                                                     setdeliveryTask({})
                                                 }
@@ -282,7 +281,7 @@ function Order() {
                                                         alignItems: 'center'
                                                     }}>
                                                         <img
-                                                            src={ selectedOrder.orderStatus === 'Prepared' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                            src={selectedOrder.orderStatus === 'Prepared' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
                                                             style={{width: 50, height: 50}}
                                                         >
                                                         </img>
@@ -329,23 +328,23 @@ function Order() {
                                                     </div>
                                                     {
                                                         deliveryTask ?
-                                                        <div style={{
-                                                            display: 'flex',
-                                                            flexDirection: 'row',
-                                                            width: 200,
-                                                            alignItems: 'center'
-                                                        }}>
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                flexDirection: 'row',
+                                                                width: 200,
+                                                                alignItems: 'center'
+                                                            }}>
 
-                                                            <img
-                                                                src={deliveryTask.status === 'Delivered' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
-                                                                style={{width: 50, height: 50}}
-                                                            >
-                                                            </img>
-                                                            <p style={{margin: 0, marginLeft: 10}}>Delivered</p>
-                                                        </div>
+                                                                <img
+                                                                    src={deliveryTask.status === 'Completed' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                                    style={{width: 50, height: 50}}
+                                                                >
+                                                                </img>
+                                                                <p style={{margin: 0, marginLeft: 10}}>Delivered</p>
+                                                            </div>
                                                             : null
                                                     }
-                                                        <div
+                                                    <div
                                                         style={{height: 10}}
                                                     ></div>
 
@@ -353,7 +352,8 @@ function Order() {
                                                 </div>
                                                 <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                                                     <div style={{height: 150}}>
-                                                        <p>Order Time: {selectedOrder.orderTime.toString().split(".")[0]} </p>
+                                                        <p>Order
+                                                            Time: {selectedOrder.orderTime.toString().split(".")[0]} </p>
                                                     </div>
 
                                                     <div style={{height: 150}}>
@@ -374,8 +374,7 @@ function Order() {
                                                                 marginBottom: 10
                                                             }}>
                                                                 <div>
-
-                                                                    <p>Pickup Time: {pickupTask.CompleteTime}</p>
+                                                                    {pickupTask.status === 'Completed' ? <p>Pickup Time: {pickupTask.CompleteTime}</p> : <p>Pickup Time: </p>}
                                                                     <img
                                                                         src={"https://storage.googleapis.com/locus_image_store/" + pickupTask.Image}
                                                                         style={{height: '100%', width: 100}}
@@ -389,14 +388,14 @@ function Order() {
                                                     }
                                                     {
                                                         deliveryTask ?
-                                                        <div style={{height: 100}}>
-                                                            <p>Delivery Time:{deliveryTask.CompleteTime} </p>
-                                                            <img
-                                                                src={"https://storage.googleapis.com/locus_image_store/" + deliveryTask.Image}
-                                                                style={{height: '100%', width: 100}}
-                                                                alt={'image'}
-                                                            ></img>
-                                                        </div>
+                                                            <div style={{height: 100}}>
+                                                                {deliveryTask.status === 'Completed' ? <p>Delivery Time:{deliveryTask.CompleteTime} </p> : <p>Delivery Time : </p>}
+                                                                <img
+                                                                    src={"https://storage.googleapis.com/locus_image_store/" + deliveryTask.Image}
+                                                                    style={{height: '100%', width: 100}}
+                                                                    alt={'image'}
+                                                                ></img>
+                                                            </div>
                                                             : null
                                                     }
                                                 </div>
