@@ -78,10 +78,14 @@ function Order() {
     const handlePrint = () => {
 
         let printContents = document.getElementById('printablediv').innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
+        var mywindow = window.open('', 'my div', 'height=400,width=600');
+        mywindow.document.body.innerHTML = printContents;
+        mywindow.print();
+        mywindow.close();
+        // let originalContents = document.body.innerHTML;
+        // document.body.innerHTML = printContents;
+        // window.print();
+        // document.body.innerHTML = originalContents;
 
     }
 
