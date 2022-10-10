@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 import { client } from "../../Features/Client";
 import OrderDetailsModal from './OrderDetailsModal';
 import moment from 'moment'
-
+import { Link, NavLink } from 'react-router-dom';
 function Order() {
     const [username, setusername] = useState(localStorage.getItem('user'))
     const [orders, setorders] = React.useState([])
@@ -98,14 +98,25 @@ function Order() {
                 show={showOrderDetailModal}
                 onHide={() => setShowOrderDetailModal(false)}
             /> */}
-            <button style={{
-                position: "absolute",
-                fontSize: 16, textAlign: 'center'
-            }}
-                onClick={() => {
-                    logout()
+            <div style={{ display: 'flex', width: '100%', alignItems: 'center', }}>
+
+
+                <Link to="/profile" style={{ color: '#fb6c3e', display: 'block', textDecoration: 'none', height: 20, }}>Profile</Link>
+
+
+                <button style={{
+                    fontSize: 16, textAlign: 'center',
+                    marginTop: 2,
+                    marginLeft: 10,
+                    background: 'white',
+                    border: 'none',
+                    color: '#fb6c3e'
                 }}
-            >Logout</button>
+                    onClick={() => {
+                        logout()
+                    }}
+                >Logout</button>
+            </div>
 
             <h1 style={{ fontSize: 30, textAlign: 'center', margin: '1em 0' }}>Shop Manager</h1>
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Order from "./pages/OrdrerHistory/Order";
 import {
 
@@ -6,7 +6,7 @@ import {
     Route,
 } from "react-router-dom";
 import Login from "./pages/LoginPage/Login";
-
+import Profile from './pages/ProfilePage/Profile';
 function Base() {
     const [login, setlogin] = useState(true)
 
@@ -19,9 +19,15 @@ function Base() {
             {
                 login ?
                     <Login
-                        setlogin={setlogin}/>
+                        setlogin={setlogin} />
                     :
-                    <Order></Order>
+                    <Routes>
+                        <Route path='/' element={<Order />} >
+                        </Route>
+                        <Route path='profile' element={<Profile />} />
+
+                    </Routes>
+                // <Order></Order>
 
             }
         </div>
