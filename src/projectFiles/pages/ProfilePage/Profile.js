@@ -6,6 +6,7 @@ import ImageCropModal from './ImageCropModal'
 import axios from "axios"
 import { gql } from "@apollo/client";
 import { client } from "../../Features/Client";
+import Button from "react-bootstrap/Button";
 
 const baseAPI = axios.create({
     //baseURL: 'http://127.0.0.1:8000/',
@@ -42,136 +43,159 @@ function Profile() {
     const [timingsData, setTimingsData] = useState([
         {
             id: 1,
-            dayName: 'Monday',
-            openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
-        },
+            day: 'Monday',
+            openthisday: true,
+            Timing: [{
+                id: 1,
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+            {   id:2,
+                openingTime: '14:10',
+                closingTime: '20:05',
+            }]
+            },
         {
             id: 2,
-            dayName: 'Tuesday',
-            openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
+            day: 'Tuesday',
+            Timing: [{
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+                {   id:2,
+                    openingTime: '14:10',
+                    closingTime: '20:05',
+                }]
         },
         {
             id: 3,
-            dayName: 'Wednesday',
-            openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
+            day: 'Wednesday',
+            Timing: [{
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+                {   id:2,
+                    openingTime: '14:10',
+                    closingTime: '20:05',
+                }]
         },
         {
             id: 4,
-            dayName: 'Thursday',
-            openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
+            day: 'Thursday',
+            openthisday: true,
+            Timing: [{
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+                {   id:2,
+                    openingTime: '14:10',
+                    closingTime: '20:05',
+                }]
         },
         {
             id: 5,
-            dayName: 'Friday',
-            openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
-        },
+            day: 'Friday',
+            openthisday: true,
+            Timing: [{
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+                {   id:2,
+                    openingTime: '14:10',
+                    closingTime: '20:05',
+                }]},
         {
             id: 6,
-            dayName: 'Saturday',
-            openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
-        },
+            day: 'Saturday',
+            openthisday: true,
+            Timing: [{
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+                {   id:2,
+                    openingTime: '14:10',
+                    closingTime: '20:05',
+                }] },
         {
             id: 7,
-            dayName: 'Sunday',
+            day: 'Sunday',
             openOnThisDay: true,
-            openingTime1: '10:05',
-            closingTime1: '12:05',
-            openingTime2: '14:10',
-            closingTime2: '20:05',
-        },
+            Timing: [{
+                openingTime: '10:05',
+                closingTime: '12:05',
+            },
+                {   id:2,
+                    openingTime: '14:10',
+                    closingTime: '20:05',
+                }] },
     ])
 
 
-    const handleTimingsChange = (dayID, tCode, value) => {
+    const handleTimingsChange = (dayID,T, tCode, value) => {
         console.log(dayID, tCode, value)
         let tempTimingList
         tempTimingList = timingsData.map((item) => {
+            let tempTiming
+            tempTiming = item.Timing.map((T) => {
+                if(T.id === tCode){
+                    if (T.id === T) {
+                        if (tCode === 'OT') {
+                            return (
+                                {
+                                    ...T,
+                                    openingTime: value
+                                }
+                            )
+                        } else if (tCode === 'CT') {
+                            return (
+                                {
+                                    ...T,
+                                    closingTime: value
+                                }
+                            )
+                        }
+                    }
+                }
+                return T
+            })
             if (item.id === dayID) {
-                if (tCode === 'ot1') {
+                if (tCode === 'OOTD') {
                     return (
                         {
                             ...item,
-                            openingTime1: value
+                            openthisday: value
                         }
                     )
                 }
-                else if (tCode === 'ct1') {
-                    return (
-                        {
-                            ...item,
-                            closingTime1: value
-                        }
-                    )
-                }
-                else if (tCode === 'ot2') {
-                    return (
-                        {
-                            ...item,
-                            openingTime2: value
-                        }
-                    )
-                }
-                else if (tCode === 'ct2') {
-                    return (
-                        {
-                            ...item,
-                            closingTime2: value
-                        }
-                    )
-                }
-                else if (tCode === 'OOTD') {
-                    return (
-                        {
-                            ...item,
-                            openOnThisDay: value
-                        }
-                    )
-                }
-
             }
+
             return item
         })
-        // console.log(timingsData)
+        console.log(tempTimingList)
         setTimingsData([...tempTimingList])
     }
 
     const Get_Restaurant_data = gql`
-    query{
-      Restaurant(username:\"${username}\"){
-        id
-        username
-        restaurantImg
-        restaurantLogo
+        query{
+            Restaurant(username:"${username}"){
+                id
+                username
+                restaurantImg
+                restaurantLogo
+                operatingTime{
+                    id
+                    day
+                    openthisday
+                    Timing{
+                        id
+                        closingTime
+                        openingTime
+                    }
+                }
 
 
 
-      }
-
-
+            }
     }`;
     useEffect(() => {
 
@@ -179,6 +203,7 @@ function Profile() {
             query: Get_Restaurant_data,
             fetchPolicy: 'no-cache'
         }).then(res => {
+            setTimingsData(res.data.Restaurant.operatingTime)
             setLogoImageData(res.data.Restaurant.restaurantLogo)
             setProfileImageData(res.data.Restaurant.restaurantImg)
             setRestaurantID(res.data.Restaurant.id)
@@ -450,100 +475,7 @@ function Profile() {
                         <p style={{ fontWeight: '700', }}>Timings</p>
                     </div>
                     <div className='col-lg-8 '>
-                        {/* <div className='row'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
 
-                    className="form-check-label" for="flexCheckDefault">
-                    Monday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
                         {
                             timingsData.length > 0 ?
                                 timingsData.map((dayData) => {
@@ -557,748 +489,98 @@ function Profile() {
                                                     <input
                                                         className="form-check-input"
                                                         type="checkbox"
-                                                        checked={dayData.openOnThisDay}
+                                                        checked={dayData.openthisday}
                                                         onChange={(e) => {
                                                             // console.log(e.target.checked)
-                                                            handleTimingsChange(dayData.id, 'OOTD', e.target.checked)
+                                                            handleTimingsChange(dayData.id, "",'OOTD', e.target.checked)
                                                         }}
                                                         value='checked' id="flexCheckDefault" />
                                                     <label
                                                         style={{ fontWeight: '700' }}
                                                         className="form-check-label" htmlFor="flexCheckDefault">
-                                                        {dayData.dayName}
+                                                        {dayData.day}
                                                     </label>
                                                 </div>
                                             </div>
                                             <div className='col-lg-8'>
+                                                {
+                                                    dayData.openthisday ?
+                                                        dayData.Timing.map((timingData) => {
+                                                            return (
+                                                                <div
+                                                                    key={timingData.id}
+                                                                    className='row'>
+                                                                    <div className='col-lg-6'>
+                                                                        <input
+                                                                            disabled={!dayData.openOnThisDay}
+                                                                            onChange={(e) => {
+                                                                                handleTimingsChange(dayData.id,timingData.id, 'OT', e.target.value)
+                                                                            }}
+                                                                            style={{
+                                                                                width: '100%',
+                                                                                backgroundColor: 'white',
+                                                                                border: 'none',
+                                                                                height: 'fit-content',
+                                                                                resize: 'none'
+                                                                            }}
+                                                                            type={'time'}
+                                                                            value={timingData.openingTime}
+                                                                        />
+                                                                    </div>
+                                                                    <div className='col-lg-6'>
+                                                                        <input
+                                                                            disabled={!dayData.openOnThisDay}
+                                                                            onChange={(e) => {
+                                                                                handleTimingsChange(dayData.id,timingData.id, 'CT', e.target.value)
+                                                                            }}
+                                                                            style={{
+                                                                                width: '100%',
+                                                                                backgroundColor: 'white',
+                                                                                border: 'none',
+                                                                                height: 'fit-content',
+                                                                                resize: 'none'
+                                                                            }}
+                                                                            type={'time'}
+                                                                            value={timingData.closingTime}
+                                                                        />
+                                                                    </div>
+                                                                    <div className='col-lg-6'>
 
-                                                <div className='row col-lg-12 '>
-                                                    <div className='col-lg-5'>
+                                                                        <Button>
+                                                                            Save
+                                                                        </Button>
+                                                                    </div>
 
-                                                        <input
-                                                            name='ot1'
-                                                            disabled={!editOpeningTime}
-                                                            onChange={(e) => {
-                                                                // setOpeningTimeValue(e.target.value)
-                                                                handleTimingsChange(dayData.id, 'ot1', e.target.value)
-                                                            }}
-                                                            style={{
-                                                                width: '100%',
-                                                                backgroundColor: 'white',
-                                                                border: 'none',
-                                                                height: 'fit-content',
 
-                                                            }}
-                                                            type={'time'}
-                                                            value={dayData.openingTime1}
-                                                        />
-                                                    </div>
-                                                    <div className='col-lg-2'>
-                                                        <div>-</div>
-                                                    </div>
-                                                    <div className='col-lg-5'>
 
-                                                        <input
-                                                            name='ct1'
-                                                            disabled={!editOpeningTime}
-                                                            onChange={(e) => {
-                                                                // setOpeningTimeValue(e.target.value)
-                                                                handleTimingsChange(dayData.id, 'ct1', e.target.value)
-                                                            }}
-                                                            style={{
-                                                                width: '100%',
-                                                                backgroundColor: 'white',
-                                                                border: 'none',
-                                                                height: 'fit-content',
 
-                                                            }}
-                                                            type={'time'}
-                                                            value={dayData.closingTime1}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className='row col-lg-12 mt-3 '>
-                                                    <div className='col-lg-5'>
+                                                                </div>
 
-                                                        <input disabled={!editOpeningTime}
-                                                            onChange={(e) => {
-                                                                // setOpeningTimeValue(e.target.value)
-                                                                handleTimingsChange(dayData.id, 'ot2', e.target.value)
-                                                            }}
-                                                            style={{
-                                                                width: '100%',
-                                                                backgroundColor: 'white',
-                                                                border: 'none',
-                                                                height: 'fit-content',
+                                                            )
 
-                                                            }}
-                                                            type={'time'}
-                                                            value={dayData.openingTime2}
-                                                        />
-                                                    </div>
-                                                    <div className='col-lg-2'>
-                                                        <div>-</div>
-                                                    </div>
-                                                    <div className='col-lg-5'>
+                                                        })
+                                                        :null
 
-                                                        <input disabled={!editOpeningTime}
-                                                            onChange={(e) => {
-                                                                // setOpeningTimeValue(e.target.value)
-                                                                handleTimingsChange(dayData.id, 'ct2', e.target.value)
-                                                            }}
-                                                            style={{
-                                                                width: '100%',
-                                                                backgroundColor: 'white',
-                                                                border: 'none',
-                                                                height: 'fit-content',
+                                                }
 
-                                                            }}
-                                                            type={'time'}
-                                                            value={dayData.closingTime2}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                             </div>
+
                                         </div>
+
                                     )
                                 })
 
-                                : null
+                                :
+                                <div className='row mt-5'>
+                                    <Button>
+                                        Add Timings
+                                    </Button>
+                                </div>
+
                         }
-                        {/* <div className='row mt-5'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
-                    className="form-check-label" for="flexCheckDefault">
-                    Tuesday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
-                        {/* <div className='row mt-5'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
-                    className="form-check-label" for="flexCheckDefault">
-                    Wednesday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='row mt-5'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
-                    className="form-check-label" for="flexCheckDefault">
-                    Thursday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='row mt-5'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
-                    className="form-check-label" for="flexCheckDefault">
-                    Friday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='row mt-5'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
-                    className="form-check-label" for="flexCheckDefault">
-                    Saturday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='row mt-5'>
-              <div className='col-lg-4'>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label
-                    style={{ fontWeight: '700' }}
-                    className="form-check-label" for="flexCheckDefault">
-                    Sunday
-                  </label>
-                </div>
-              </div>
-              <div className='col-lg-8'>
-
-                <div className='row col-lg-12 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        // border: 'none',
-                        border: '1px solid #d2d2d2',
-                        padding: '10px',
-                        height: 'fit-content',
-                        color: 'grey'
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-                <div className='row col-lg-12 mt-3 '>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                  <div className='col-lg-2'>
-                    <div>-</div>
-                  </div>
-                  <div className='col-lg-5'>
-
-                    <input disabled={!editOpeningTime}
-                      onChange={(e) => {
-                        setOpeningTimeValue(e.target.value)
-                      }}
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        border: 'none',
-                        height: 'fit-content',
-
-                      }}
-                      type={'time'}
-                      value={openingTimeValue}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
-                        {/* <input disabled={!editOpeningTime}
-              onChange={(e) => {
-                setOpeningTimeValue(e.target.value)
-              }}
-              style={{
-                width: '100%',
-                backgroundColor: 'white',
-                border: 'none',
-                height: 'fit-content',
-
-              }}
-              type={'time'}
-              value={openingTimeValue}
-            /> */}
-                        {/* <button
-              onClick={() => {
-                setEditOpeningTime(true)
-              }}
-              style={{
-                backgroundColor: 'white',
-                border: 'none',
-                color: '#fb6c3e',
-                display: 'inline',
-                paddingTop: '10px'
-
-              }}
-            ><span className="material-symbols-outlined" style={{ fontSize: '1.2em' }}>
-                edit
-              </span>
-            </button> */}
 
                     </div>
                 </div>
-                {/* <div className='row col-lg-8 mt-2' style={{ margin: '0 auto' }}>
-          <div className='col-lg-4'>
-            <p style={{ fontWeight: '700', }}>Closing Time </p>
-          </div>
-          <div className='col-lg-8 d-flex align-items-center'>
-            <input
-              disabled={!editClosingTime}
-              onChange={(e) => {
-                setClosingTimeValue(e.target.value)
-              }}
-              style={{
-                width: '100%',
-                backgroundColor: 'white',
-                border: 'none',
-                height: 'fit-content',
-
-              }}
-              type={'time'}
-              value={closingTimeValue}
-            />
-            <button
-              onClick={() => {
-                setEditClosingTime(true)
-              }}
-              style={{
-                backgroundColor: 'white',
-                border: 'none',
-                color: '#fb6c3e',
-                display: 'inline',
-                paddingTop: '10px'
-
-              }}
-            ><span className="material-symbols-outlined" style={{ fontSize: '1.2em' }}>
-                edit
-              </span>
-            </button>
-
-          </div>
-        </div> */}
                 <div className='row col-lg-8 mt-2' style={{ margin: '0 auto' }}>
                     <div className='col-lg-4'>
                         <p style={{ fontWeight: '700', }}>Minimum Order</p>
