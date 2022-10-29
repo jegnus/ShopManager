@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Login from "./pages/LoginPage/Login";
 import Profile from './pages/ProfilePage/Profile';
+import Account from './pages/AccountPage/Account';
 function Base() {
     const [login, setlogin] = useState(true)
 
@@ -25,7 +26,7 @@ function Base() {
                         <Route path='/' element={<Order />} >
                         </Route>
                         <Route path='profile' element={<Profile />} />
-
+                        <Route path='account' element={<Account />} />
                     </Routes>
                 // <Order></Order>
 
