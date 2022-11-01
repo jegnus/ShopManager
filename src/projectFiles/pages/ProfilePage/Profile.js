@@ -9,6 +9,7 @@ import { client } from "../../Features/Client";
 import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import PartnerAddModal from './PartnerAddModal';
 const baseAPI = axios.create({
     //baseURL: 'http://127.0.0.1:8000/',
     baseURL: 'https://jegnus.com/',
@@ -44,7 +45,9 @@ function Profile() {
     const [profileLoading, setProfileLoading] = useState(true)
     const [Restaurant, setRestaurant] = useState("")
     const [timingsData, setTimingsData] = useState([])
-
+    const [selectedPartner, setSelectedPartner] = useState('')
+    const [showPartnerAddModal, setShowPartnerAddModal] = useState(true)
+    const [partnerList, setPartnerList] = useState([])
     const UpdateDetail = async () => {
         const editRestaurant = gql`
             mutation{
@@ -248,6 +251,14 @@ function Profile() {
             )
     }
 
+    const handleDeletePartner = (value) => {
+
+        let tempPartnerList = [...partnerList]
+        tempPartnerList = tempPartnerList.filter(item => item.partnerName !== value)
+        setPartnerList([...tempPartnerList])
+
+    }
+
     return (
 
         <div className='container ' style={{ textAlign: 'left' }} >
@@ -262,7 +273,22 @@ function Profile() {
                     />
                     : null
             }
-
+            {
+                showPartnerAddModal ?
+                    <PartnerAddModal
+                        // imageAspect={imgAspect}
+                        // sub={(val, newCroppedFile) => handleCroppedImage(val, newCroppedFile)}
+                        // imgSource={imgSrc}
+                        handlePartnerAdd={(partnerDetails) => {
+                            console.log('addded', partnerDetails)
+                            partnerList.push(partnerDetails)
+                            setShowPartnerAddModal(false)
+                        }}
+                        show={showPartnerAddModal}
+                        onHide={() => setShowPartnerAddModal(false)}
+                    />
+                    : null
+            }
             <div style={{ position: 'relative' }}>
                 <div style={{ position: 'absolute', right: 10, top: 10, }}>
                     <input type="file" name="restaurant_profile" id="restaurant_profile" onChange={(e) => {
@@ -629,14 +655,63 @@ function Profile() {
                 </div>
 
                 <div className='row col-lg-8 mt-4' style={{ margin: '0 auto' }}>
-                    <DropdownButton
-
+                    {/* <DropdownButton
+                        // onClick={(e) => { console.log(e) }}
+                        // onChange={(e) => { console.log(e.target) }}
                         onSelect={(e) => console.log(e)}
+                        // style={{ backgroundColor: '#fb6c3e' }}
+
                         id="dropdown-basic-button" title="Dropdown button">
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                    </DropdownButton>
+                        <Dropdown.Item href="#/action-2">Gaston</Dropdown.Item>
+                        <Dropdown.Item href="#/action-1">Deliveroo</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Uber Eats</Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">Just Eat</Dropdown.Item>
+                    </DropdownButton> */}
+                    <div className='col-lg-4'>
+                        <p style={{ fontWeight: '700', }}>idle Prepare time</p>
+                    </div>
+                    <div className='col-lg-8 '>
+                        <button
+                            onClick={() => {
+                                console.log('clicked')
+                                setShowPartnerAddModal(true)
+                            }}
+                        >+ add partner</button>
+                        <div>
+                            {
+                                partnerList.length > 0 ?
+
+                                    partnerList.map((partner, index) => {
+                                        return (
+
+                                            <div
+                                                key={index}
+                                                style={{ marginTop: 20, padding: 10, border: '1px solid grey', borderRadius: 10 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                    <p style={{ fontWeight: '700' }}>{partner.partnerName}</p>
+                                                    <p
+                                                        style={{ cursor: 'pointer' }}
+                                                        onClick={() => {
+                                                            handleDeletePartner(partner.partnerName)
+                                                        }}>X</p>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                                                    <p>Partner Id</p>
+                                                    <p>{partner.partnerId}</p>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                                                    <p>Restaurant Id</p>
+                                                    <p>{partner.restaurantID}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                    : null
+                            }
+                        </div>
+                    </div>
                 </div>
 
 
