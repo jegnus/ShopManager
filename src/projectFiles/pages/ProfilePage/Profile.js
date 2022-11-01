@@ -123,12 +123,21 @@ function Profile() {
 
     const Get_Restaurant_data = gql`
         query{
-            Restaurant(username:"${username}"){
+
+            Restaurant(username:"indianlounge"){
                 id
-                RestaurantName
                 username
+                ResturantName
+                preparationTime
+                patner{
+                    id
+                    mobileNo
+                    name
+                }
                 restaurantImg
                 restaurantLogo
+                description
+                mobileNo
                 operatingTime{
                     id
                     day
@@ -139,11 +148,9 @@ function Profile() {
                         openingTime
                     }
                 }
-
-
-
             }
-    }`;
+        }
+    `;
     useEffect(() => {
 
         client.query({
@@ -155,6 +162,8 @@ function Profile() {
             setTimingsData(res.data.Restaurant.operatingTime)
             setLogoImageData(res.data.Restaurant.restaurantLogo)
             setProfileImageData(res.data.Restaurant.restaurantImg)
+            setDescriptionValue(res.data.Restaurant.description)
+            setPhoneValue(res.data.Restaurant.mobileNo)
             setRestaurantID(res.data.Restaurant.id)
             setloading(false)
             setProfileLoading(false)
@@ -352,7 +361,7 @@ function Profile() {
                             style={{
                                 width: '100%',
                                 backgroundColor: 'white',
-                                border: 'none',
+                                border: editDescription ? '1px solid #fb5c3e' : '1px solid grey',
                                 height: 'fit-content',
                                 resize: 'none'
                             }}
@@ -363,7 +372,7 @@ function Profile() {
 
                             <button
                                 onClick={() => {
-                                    setEditDescription(true)
+                                    setEditDescription(!editDescription)
                                 }}
                                 style={{
                                     backgroundColor: 'white',
@@ -392,7 +401,7 @@ function Profile() {
                             style={{
                                 width: '100%',
                                 backgroundColor: 'white',
-                                border: 'none',
+                                border: editPhone ? '1px solid #fb6c3e' : 'none',
                                 height: 'fit-content',
                                 resize: 'none'
                             }}
@@ -401,7 +410,7 @@ function Profile() {
                         />
                         <button
                             onClick={() => {
-                                setEditPhone(true)
+                                setEditPhone(!editPhone)
                             }}
                             style={{
                                 backgroundColor: 'white',
@@ -530,45 +539,45 @@ function Profile() {
 
                     </div>
                 </div>
-                <div className='row col-lg-8 mt-2' style={{ margin: '0 auto' }}>
-                    <div className='col-lg-4'>
-                        <p style={{ fontWeight: '700', }}>Minimum Order</p>
-                    </div>
-                    <div className='col-lg-8 d-flex align-items-center'>
-                        <input
-                            disabled={!editMinimumOrder}
-                            onChange={(e) => {
-                                setMinimumOrderAmount(e.target.value)
-                            }}
-                            style={{
-                                width: '100%',
-                                backgroundColor: 'white',
-                                border: 'none',
-                                height: 'fit-content',
+                {/*<div className='row col-lg-8 mt-2' style={{ margin: '0 auto' }}>*/}
+                {/*    <div className='col-lg-4'>*/}
+                {/*        <p style={{ fontWeight: '700', }}>Minimum Order</p>*/}
+                {/*    </div>*/}
+                {/*    <div className='col-lg-8 d-flex align-items-center'>*/}
+                {/*        <input*/}
+                {/*            disabled={!editMinimumOrder}*/}
+                {/*            onChange={(e) => {*/}
+                {/*                setMinimumOrderAmount(e.target.value)*/}
+                {/*            }}*/}
+                {/*            style={{*/}
+                {/*                width: '100%',*/}
+                {/*                backgroundColor: 'white',*/}
+                {/*                border: 'none',*/}
+                {/*                height: 'fit-content',*/}
 
-                            }}
-                            type={'number'}
-                            value={minimumOrderAmount}
-                        />
-                        <button
-                            onClick={() => {
-                                setEditMinimumOrder(true)
-                            }}
-                            style={{
-                                backgroundColor: 'white',
-                                border: 'none',
-                                color: '#fb6c3e',
-                                display: 'inline',
-                                paddingTop: '10px'
+                {/*            }}*/}
+                {/*            type={'number'}*/}
+                {/*            value={minimumOrderAmount}*/}
+                {/*        />*/}
+                {/*        <button*/}
+                {/*            onClick={() => {*/}
+                {/*                setEditMinimumOrder(true)*/}
+                {/*            }}*/}
+                {/*            style={{*/}
+                {/*                backgroundColor: 'white',*/}
+                {/*                border: 'none',*/}
+                {/*                color: '#fb6c3e',*/}
+                {/*                display: 'inline',*/}
+                {/*                paddingTop: '10px'*/}
 
-                            }}
-                        ><span className="material-symbols-outlined" style={{ fontSize: '1.2em' }}>
-                                edit
-                            </span>
-                        </button>
+                {/*            }}*/}
+                {/*        ><span className="material-symbols-outlined" style={{ fontSize: '1.2em' }}>*/}
+                {/*                edit*/}
+                {/*            </span>*/}
+                {/*        </button>*/}
 
-                    </div>
-                </div>
+                {/*    </div>*/}
+                {/*</div>*/}
 
                 <div className='row col-lg-8 mt-2' style={{ margin: '0 auto' }}>
                     <div className='col-lg-4'>
@@ -583,21 +592,22 @@ function Profile() {
                             style={{
                                 width: '100%',
                                 backgroundColor: 'white',
-                                border: 'none',
                                 height: 'fit-content',
+                                border: editMinimumOrder ? '1px solid #fb6c3e' : 'none',
+
 
                             }}
                             type={'number'}
-                            value={Restaurant.id}
+                            value={minimumOrderAmount}
                         />
                         <button
                             onClick={() => {
-                                setEditMinimumOrder(true)
+                                setEditMinimumOrder(!editMinimumOrder)
                             }}
                             style={{
                                 backgroundColor: 'white',
-                                border: 'none',
                                 color: '#fb6c3e',
+                                border: 'none',
                                 display: 'inline',
                                 paddingTop: '10px'
 
