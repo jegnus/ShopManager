@@ -1,11 +1,54 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
+import {useMutation} from "@apollo/client";
+import {client} from "../../Features/Client";
+import {gql} from "@apollo/client";
+
 function PartnerAddModal(props) {
     const [partnerDetails, setPartnerDetails] = useState({
-        partnerName: '',
-        partnerId: '',
-        restaurantID: ''
+        name: '',
+        mobileNo: '',
+        restaurantId: '',
+        apiKey: '',
+        email: '',
     })
+
+    const CreatePartner = async () => {
+        console.log("CreatePartner",props.RId, partnerDetails.name, partnerDetails.mobileNo, partnerDetails.restaurantId, partnerDetails.apiKey, partnerDetails.email)
+        const createPatner = gql`
+            mutation{
+                CreatePatner(
+                    RId: ${props.RId},
+                    PatnerName: "${partnerDetails.name}",
+                    mobileNo: "${partnerDetails.mobileNo}",
+                    email: "",
+                    apiKey: "",
+                    patnerRestaurantId: "${partnerDetails.restaurantId}"
+                )
+                {
+                    Patner{
+                        id
+
+                    }
+                }
+            }
+        `
+        client.mutate({
+            mutation: createPatner,
+            fetchPolicy: 'no-cache',
+
+        }
+        ).then((result) => {
+            console.log(result)
+            props.onHide()
+
+
+        }).catch((error) => {
+            console.log(error)
+            alert("Something went wrong")
+        })
+    }
+
     return (
         <Modal
             show={props.show}
@@ -17,7 +60,7 @@ function PartnerAddModal(props) {
             {/* <form action="" > */}
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    <h3 style={{ color: '#fb6e3c', fontWeight: 'light' }}>Crop Food Item Image</h3>
+                    <h3 style={{ color: '#fb6e3c', fontWeight: 'light' }}>Add Patner Detail</h3>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -29,7 +72,7 @@ function PartnerAddModal(props) {
                         >Partner</label>
                         <select
                             onChange={(e) => {
-                                setPartnerDetails({ ...partnerDetails, partnerName: e.target.value })
+                                setPartnerDetails({ ...partnerDetails, name: e.target.value })
                             }}
                             // onSelect={(e) => {
                             //     console.log(e)
@@ -48,7 +91,7 @@ function PartnerAddModal(props) {
                         <label for="exampleFormControlInput1" class="form-label">Partner Restaurant ID</label>
                         <input type="text"
                             onChange={(e) => {
-                                setPartnerDetails({ ...partnerDetails, restaurantID: e.target.value })
+                                setPartnerDetails({ ...partnerDetails, restaurantId: e.target.value })
 
                             }}
 
@@ -57,13 +100,13 @@ function PartnerAddModal(props) {
 
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
-                        <label for="exampleFormControlInput1" class="form-label">Partner ID</label>
+                        <label for="exampleFormControlInput1" class="form-label">mobile No</label>
                         <input type="text" class="form-control"
                             onChange={(e) => {
-                                setPartnerDetails({ ...partnerDetails, partnerId: e.target.value })
+                                setPartnerDetails({ ...partnerDetails, mobileNo: e.target.value })
 
                             }}
-                            style={{ width: 200 }} id="exampleFormControlInput1" placeholder="partner ID" />
+                            style={{ width: 200 }} id="exampleFormControlInput1" placeholder="mobileNo" />
 
 
                     </div>
@@ -75,7 +118,11 @@ function PartnerAddModal(props) {
                 <button onClick={(e) => {
                     // console.log("clicked")
                     // handleCroppedImage(e)
-                    props.handlePartnerAdd(partnerDetails)
+                    props.onHide()
+                }} className='justify-end addCategory'>Close</button>
+
+                <button onClick={(e) => {
+                    CreatePartner()
                 }} className='justify-end addCategory'>Add</button>
             </Modal.Footer>
             {/* </form> */}

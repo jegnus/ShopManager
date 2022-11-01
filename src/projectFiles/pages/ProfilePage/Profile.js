@@ -46,7 +46,7 @@ function Profile() {
     const [Restaurant, setRestaurant] = useState("")
     const [timingsData, setTimingsData] = useState([])
     const [selectedPartner, setSelectedPartner] = useState('')
-    const [showPartnerAddModal, setShowPartnerAddModal] = useState(true)
+    const [showPartnerAddModal, setShowPartnerAddModal] = useState(false)
     const [partnerList, setPartnerList] = useState([])
     const UpdateDetail = async () => {
         const editRestaurant = gql`
@@ -140,6 +140,7 @@ function Profile() {
                 preparationTime
                 patner{
                     id
+                    restaurantId
                     mobileNo
                     name
                 }
@@ -174,6 +175,7 @@ function Profile() {
             setPhoneValue(res.data.Restaurant.mobileNo)
             setRestaurantID(res.data.Restaurant.id)
             setloading(false)
+            setPartnerList(res.data.Restaurant.patner)
             setProfileLoading(false)
         }).catch(err => {
             console.log(err)
@@ -284,6 +286,7 @@ function Profile() {
                             partnerList.push(partnerDetails)
                             setShowPartnerAddModal(false)
                         }}
+                        RId={Restaurant.id}
                         show={showPartnerAddModal}
                         onHide={() => setShowPartnerAddModal(false)}
                     />
@@ -668,7 +671,7 @@ function Profile() {
                         <Dropdown.Item href="#/action-3">Just Eat</Dropdown.Item>
                     </DropdownButton> */}
                     <div className='col-lg-4'>
-                        <p style={{ fontWeight: '700', }}>idle Prepare time</p>
+                        <p style={{ fontWeight: '700', }}>Patners</p>
                     </div>
                     <div className='col-lg-8 '>
                         <button
@@ -688,22 +691,22 @@ function Profile() {
                                                 key={index}
                                                 style={{ marginTop: 20, padding: 10, border: '1px solid grey', borderRadius: 10 }}>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                    <p style={{ fontWeight: '700' }}>{partner.partnerName}</p>
+                                                    <p style={{ fontWeight: '700' }}>{partner.name}</p>
                                                     <p
                                                         style={{ cursor: 'pointer' }}
                                                         onClick={() => {
-                                                            handleDeletePartner(partner.partnerName)
+                                                            handleDeletePartner(partner.name)
                                                         }}>X</p>
                                                 </div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
                                                     <p>Partner Id</p>
-                                                    <p>{partner.partnerId}</p>
+                                                    <p>{partner.mobileNo}</p>
                                                 </div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
                                                     <p>Restaurant Id</p>
-                                                    <p>{partner.restaurantID}</p>
+                                                    <p>{partner.restaurantId}</p>
                                                 </div>
                                             </div>
                                         )
