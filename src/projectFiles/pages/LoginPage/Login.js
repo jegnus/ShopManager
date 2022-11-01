@@ -1,16 +1,51 @@
 import React, { useState } from 'react'
 import { gql } from "@apollo/client";
 import { client } from "../../Features/Client";
+import {Modal} from "react-bootstrap";
 
 function Login(props) {
-
+    const [forgetpassword, setforgetpassword] = useState(false)
     const [username, setusername] = useState("")
+    const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
 
+    const passwordChange = (e) => {
+        const resetlink = gql`
+
+            mutation{
+                sendPasswordResetEmail(
+                    email:"${email}"
+                )
+                {
+                    success
+                    errors
+                }
+
+            }`
+
+        client.mutate({
+            mutation: resetlink,
+            fetchPolicy: 'no-cache'
+        }).then(res => {
+            console.log(res)
+            if (res.data.sendPasswordResetEmail.success) {
+                setforgetpassword(false)
+                alert("Password Reset Link Sent To Your Email")
+
+            }
+            else {
+                alert("Email Not Found")
+            }
+
+        }).catch(err => {
+                console.log(err)
+            })
+        }
 
 
     async function getUser() {
         const username = localStorage.getItem('username');
+
         const token = localStorage.getItem('token');
         console.log("token", token)
 
@@ -94,6 +129,36 @@ function Login(props) {
                 flexDirection: 'column',
             }}
         >
+
+            <Modal
+                show={forgetpassword}
+                onHide={() => setforgetpassword(false)}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Forget Password</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <input
+                                type="text"
+                                placeholder="Enter your email"
+                                onChange={(e) => setemail(e.target.value)}
+                                style={{ width: '300px', height: '40px', borderRadius: '5px', border: '1px solid #000', padding: '10px', marginTop: '10px' }}
+                            />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <button
+                                onClick={passwordChange}
+                                style={{ width: '300px', height: '40px', borderRadius: '5px', border: '1px solid #000', padding: '10px', marginTop: '10px' }}
+                            >Send Reset Link</button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
             <div className='container' style={{}}>
 
 
@@ -163,13 +228,18 @@ function Login(props) {
                                 Login
                             </button>
 
-                            <p
+                            <button
+                                onClick={() => {
+                                    setforgetpassword(true)
+
+                                }}
 
                                 style={{
                                     marginBottom: 0,
+                                    border : 'none',
                                     textDecoration: 'underline',
                                     cursor: 'pointer'
-                                }}>Forgot password ?</p>
+                                }}>Forgot password ?</button>
                         </div>
                     </div>
                     {/* <div
