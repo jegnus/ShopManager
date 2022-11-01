@@ -26,8 +26,8 @@ function HomeBase() {
                 </div>
                 <h1 style={{ fontSize: '1.5rem', marginBottom: 0 }}>Shop Manager</h1>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-
-                    <Link to="/account" style={{ color: '#fb6c3e', display: 'block', textDecoration: 'none', height: 20, }}>Accounts</Link>
+                    <Link to="/" style={{ color: '#fb6c3e', display: 'block', textDecoration: 'none', height: 20, }}>Orders</Link>
+                    <Link to="/account" style={{ color: '#fb6c3e', display: 'block', textDecoration: 'none', height: 20,marginLeft: 20  }}>Bills</Link>
                     <Link to="/profile" style={{ color: '#fb6c3e', display: 'block', textDecoration: 'none', height: 20, marginLeft: 20 }}>Profile</Link>
 
                     <button style={{

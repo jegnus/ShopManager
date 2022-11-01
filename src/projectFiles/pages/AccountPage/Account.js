@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Table from 'react-bootstrap/Table';
 function Account() {
+
+    const [invoice, setInvoice] = useState([])
+    const [selectedinvoice, setselectedinvoice] = useState([])
     const [selectedInvoiceID, setSelectedInvoiceID] = useState('')
     const handlePrint = () => {
 
@@ -58,7 +61,7 @@ function Account() {
 
         scriptToAdd.appendChild(inlineScript);
 
-        // Uncomment to load script from another 
+        // Uncomment to load script from another
         // source
         // scriptToAdd.src = 'myscript.js';
 
@@ -124,7 +127,7 @@ function Account() {
                             <hr style={{ marginTop: 5 }} />
 
                             {
-                                [1, 2, 3, 4, 5].map((invoice, index) => {
+                                invoice.map((invoice, index) => {
                                     console.log("invoice details", invoice)
                                     return (
                                         <div
@@ -158,6 +161,7 @@ function Account() {
                     </div>
                 </div>
                 <div className='col-lg-7'>
+                    { selectedinvoice > 0 ?
                     <div id='invoiceDiv' style={{ border: '1px solid #7F7F7F', borderRadius: 10, padding: 20, }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <img style={{ width: '100px' }} src='https://storage.googleapis.com/locus_image_store/assets/logo_1024.png'></img>
@@ -202,7 +206,7 @@ function Account() {
                         {/* <div>
                             <p style={{ fontWeight: '700', fontSize: '1.2rem' }}>Orders processed</p>
                         </div> */}
-                        {/* <table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
+                         <table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
                             <thead>
                                 <tr>
                                     <th>#Order ID</th>
@@ -286,8 +290,9 @@ function Account() {
                                     <td style={{ fontWeight: 'bold' }}>6</td>
                                 </tr>
                             </tbody>
-                        </table> */}
-                        <table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
+                        </table>
+
+                        {/*<table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
                             <thead>
                                 <tr>
                                     <th>Item</th>
@@ -308,7 +313,8 @@ function Account() {
 
 
                             </tbody>
-                        </table>
+                        </table>*/}
+
                         <div style={{}}>
                             <p style={{ textAlign: 'right', marginRight: 10 }}>Total Payable Amount<span style={{ marginLeft: 20, fontSize: 30, fontWeight: '600' }}>£759.00</span></p>
                         </div>
@@ -323,7 +329,11 @@ function Account() {
                             </div>
                         </div>
                     </div>
+                        :
+                        null
+                    }
                     <button
+                        disabled={true}
                         onClick={() => {
                             handlePrint()
                         }}

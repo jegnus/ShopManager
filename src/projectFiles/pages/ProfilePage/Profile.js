@@ -40,97 +40,43 @@ function Profile() {
     const [loading, setloading] = useState(true)
     const [restaurantID, setRestaurantID] = useState(-1)
     const [profileLoading, setProfileLoading] = useState(true)
-    const [timingsData, setTimingsData] = useState([
-        {
-            id: 1,
-            day: 'Monday',
-            openthisday: true,
-            Timing: [{
-                id: 1,
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-            {   id:2,
-                openingTime: '14:10',
-                closingTime: '20:05',
-            }]
-            },
-        {
-            id: 2,
-            day: 'Tuesday',
-            Timing: [{
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-                {   id:2,
-                    openingTime: '14:10',
-                    closingTime: '20:05',
-                }]
-        },
-        {
-            id: 3,
-            day: 'Wednesday',
-            Timing: [{
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-                {   id:2,
-                    openingTime: '14:10',
-                    closingTime: '20:05',
-                }]
-        },
-        {
-            id: 4,
-            day: 'Thursday',
-            openthisday: true,
-            Timing: [{
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-                {   id:2,
-                    openingTime: '14:10',
-                    closingTime: '20:05',
-                }]
-        },
-        {
-            id: 5,
-            day: 'Friday',
-            openthisday: true,
-            Timing: [{
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-                {   id:2,
-                    openingTime: '14:10',
-                    closingTime: '20:05',
-                }]},
-        {
-            id: 6,
-            day: 'Saturday',
-            openthisday: true,
-            Timing: [{
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-                {   id:2,
-                    openingTime: '14:10',
-                    closingTime: '20:05',
-                }] },
-        {
-            id: 7,
-            day: 'Sunday',
-            openOnThisDay: true,
-            Timing: [{
-                openingTime: '10:05',
-                closingTime: '12:05',
-            },
-                {   id:2,
-                    openingTime: '14:10',
-                    closingTime: '20:05',
-                }] },
-    ])
+    const [Restaurant, setRestaurant] = useState("")
+    const [timingsData, setTimingsData] = useState([])
+
+    const UpdateDetail = async () => {
+        const editRestaurant = gql`
+            mutation{
+                editRestaurant(
+                    ResturantName:""
+                    username:""
+                    description:""
+                    mobileNo:""
+                    
+                )
+                {
+                    Restaurant{
+                        id
+                    }
+                }
+            }
+            `
+        client.mutate({
+            mutation: editRestaurant,
+            fetchPolicy: "no-cache",
+        }
+        ).then((result) => {
+            console.log(result)
+            setRestaurant(result.data.editRestaurant.Restaurant)
+            setRestaurantID(result.data.editRestaurant.Restaurant.id)
+            setloading(false)
+        }
+        ).catch((error) => {
+            console.log(error)
 
 
+        })
+
+    }
     const handleTimingsChange = (dayID,T, tCode, value) => {
         console.log(dayID, tCode, value)
         let tempTimingList
@@ -179,6 +125,7 @@ function Profile() {
         query{
             Restaurant(username:"${username}"){
                 id
+                RestaurantName
                 username
                 restaurantImg
                 restaurantLogo
@@ -203,6 +150,8 @@ function Profile() {
             query: Get_Restaurant_data,
             fetchPolicy: 'no-cache'
         }).then(res => {
+            console.log("get restaurant",res.data.Restaurant)
+            setRestaurant(res.data.Restaurant)
             setTimingsData(res.data.Restaurant.operatingTime)
             setLogoImageData(res.data.Restaurant.restaurantLogo)
             setProfileImageData(res.data.Restaurant.restaurantImg)
@@ -384,7 +333,7 @@ function Profile() {
             </div>
 
             <div className='mt-5'>
-                <h2 style={{ fontWeight: '300' }}> Welcome Domino's Pizza</h2>
+                <h2 style={{ fontWeight: '300' }}> Welcome {Restaurant.username}</h2>
 
 
 
@@ -620,6 +569,50 @@ function Profile() {
 
                     </div>
                 </div>
+
+                <div className='row col-lg-8 mt-2' style={{ margin: '0 auto' }}>
+                    <div className='col-lg-4'>
+                        <p style={{ fontWeight: '700', }}>idle Prepare time</p>
+                    </div>
+                    <div className='col-lg-8 d-flex align-items-center'>
+                        <input
+                            disabled={!editMinimumOrder}
+                            onChange={(e) => {
+                                setMinimumOrderAmount(e.target.value)
+                            }}
+                            style={{
+                                width: '100%',
+                                backgroundColor: 'white',
+                                border: 'none',
+                                height: 'fit-content',
+
+                            }}
+                            type={'number'}
+                            value={Restaurant.id}
+                        />
+                        <button
+                            onClick={() => {
+                                setEditMinimumOrder(true)
+                            }}
+                            style={{
+                                backgroundColor: 'white',
+                                border: 'none',
+                                color: '#fb6c3e',
+                                display: 'inline',
+                                paddingTop: '10px'
+
+                            }}
+                        ><span className="material-symbols-outlined" style={{ fontSize: '1.2em' }}>
+                                edit
+                            </span>
+                        </button>
+
+                    </div>
+                </div>
+
+
+
+
                 <div className='row col-lg-8 mt-4' style={{ margin: '0 auto' }}>
                     <button
 
