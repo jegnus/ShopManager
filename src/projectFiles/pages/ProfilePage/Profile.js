@@ -48,6 +48,8 @@ function Profile() {
     const [selectedPartner, setSelectedPartner] = useState('')
     const [showPartnerAddModal, setShowPartnerAddModal] = useState(false)
     const [partnerList, setPartnerList] = useState([])
+
+
     const UpdateDetail = async () => {
         const editRestaurant = gql`
             mutation{
@@ -86,6 +88,41 @@ function Profile() {
         })
 
     }
+
+
+    const deletePartner = async (partnerID) => {
+        const deletePartner = gql`
+            mutation{
+                mutation{
+                    DeletePatner(
+                        id: ${partnerID}){
+                        Patner{
+                            id
+                        }
+                    }
+                }
+
+            }
+    `
+        client.mutate({
+            mutation: deletePartner,
+            fetchPolicy: "no-cache",
+
+        }
+        ).then((result) => {
+
+            console.log(result)
+                Get_Restaurant()
+
+        }
+        ).catch((error) => {
+            console.log(error)
+            alert("Partner Not Deleted")
+
+        }
+        )
+    }
+
     const handleTimingsChange = (dayID, T, tCode, value) => {
         console.log(dayID, tCode, value)
         let tempTimingList
@@ -696,7 +733,8 @@ function Profile() {
                                                     <p
                                                         style={{ cursor: 'pointer' }}
                                                         onClick={() => {
-                                                            handleDeletePartner(partner.name)
+                                                            deletePartner(partner.id)
+                                                            // handleDeletePartner(partner.name)
                                                         }}>X</p>
                                                 </div>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>

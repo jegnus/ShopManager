@@ -85,24 +85,24 @@ function Account() {
                 <div style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 35, fontWeight: '700' }}>£350</p>
+                        <p style={{ marginBottom: 0, fontSize: 35, fontWeight: '700' }}>£0</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Todays Bill Amount</p>
                     </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%', padding: 30, backgroundColor: '#FFFCFB' }}>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>£159</p>
+                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>£0</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Todays Bill Amount</p>
                     </div>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>105</p>
+                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>0</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Successful Deliveries</p>
                     </div>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>4</p>
+                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>0</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Returned Orders</p>
                     </div>
 
@@ -316,7 +316,7 @@ function Account() {
                         </table>*/}
 
                         <div style={{}}>
-                            <p style={{ textAlign: 'right', marginRight: 10 }}>Total Payable Amount<span style={{ marginLeft: 20, fontSize: 30, fontWeight: '600' }}>£759.00</span></p>
+                            <p style={{ textAlign: 'right', marginRight: 10 }}>Total Payable Amount<span style={{ marginLeft: 20, fontSize: 30, fontWeight: '600' }}>£0.00</span></p>
                         </div>
                         <div>
                             <h4>Payment Details</h4>
