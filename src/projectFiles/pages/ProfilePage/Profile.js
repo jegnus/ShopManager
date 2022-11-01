@@ -7,7 +7,8 @@ import axios from "axios"
 import { gql } from "@apollo/client";
 import { client } from "../../Features/Client";
 import Button from "react-bootstrap/Button";
-
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 const baseAPI = axios.create({
     //baseURL: 'http://127.0.0.1:8000/',
     baseURL: 'https://jegnus.com/',
@@ -77,13 +78,13 @@ function Profile() {
         })
 
     }
-    const handleTimingsChange = (dayID,T, tCode, value) => {
+    const handleTimingsChange = (dayID, T, tCode, value) => {
         console.log(dayID, tCode, value)
         let tempTimingList
         tempTimingList = timingsData.map((item) => {
             let tempTiming
             tempTiming = item.Timing.map((T) => {
-                if(T.id === tCode){
+                if (T.id === tCode) {
                     if (T.id === T) {
                         if (tCode === 'OT') {
                             return (
@@ -157,7 +158,7 @@ function Profile() {
             query: Get_Restaurant_data,
             fetchPolicy: 'no-cache'
         }).then(res => {
-            console.log("get restaurant",res.data.Restaurant)
+            console.log("get restaurant", res.data.Restaurant)
             setRestaurant(res.data.Restaurant)
             setTimingsData(res.data.Restaurant.operatingTime)
             setLogoImageData(res.data.Restaurant.restaurantLogo)
@@ -450,7 +451,7 @@ function Profile() {
                                                         checked={dayData.openthisday}
                                                         onChange={(e) => {
                                                             // console.log(e.target.checked)
-                                                            handleTimingsChange(dayData.id, "",'OOTD', e.target.checked)
+                                                            handleTimingsChange(dayData.id, "", 'OOTD', e.target.checked)
                                                         }}
                                                         value='checked' id="flexCheckDefault" />
                                                     <label
@@ -472,7 +473,7 @@ function Profile() {
                                                                         <input
                                                                             disabled={!dayData.openOnThisDay}
                                                                             onChange={(e) => {
-                                                                                handleTimingsChange(dayData.id,timingData.id, 'OT', e.target.value)
+                                                                                handleTimingsChange(dayData.id, timingData.id, 'OT', e.target.value)
                                                                             }}
                                                                             style={{
                                                                                 width: '100%',
@@ -489,7 +490,7 @@ function Profile() {
                                                                         <input
                                                                             disabled={!dayData.openOnThisDay}
                                                                             onChange={(e) => {
-                                                                                handleTimingsChange(dayData.id,timingData.id, 'CT', e.target.value)
+                                                                                handleTimingsChange(dayData.id, timingData.id, 'CT', e.target.value)
                                                                             }}
                                                                             style={{
                                                                                 width: '100%',
@@ -517,11 +518,11 @@ function Profile() {
                                                             )
 
                                                         })
-                                                        :null
+                                                        : null
 
                                                 }
 
-                                             </div>
+                                            </div>
 
                                         </div>
 
@@ -620,7 +621,16 @@ function Profile() {
                     </div>
                 </div>
 
+                <div className='row col-lg-8 mt-4' style={{ margin: '0 auto' }}>
+                    <DropdownButton
 
+                        onSelect={(e) => console.log(e)}
+                        id="dropdown-basic-button" title="Dropdown button">
+                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                    </DropdownButton>
+                </div>
 
 
                 <div className='row col-lg-8 mt-4' style={{ margin: '0 auto' }}>
