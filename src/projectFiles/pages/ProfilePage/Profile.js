@@ -22,6 +22,7 @@ function Profile() {
 
     const [descriptionValue, setDescriptionValue] = useState('Located at London. We offer a wide array of fresh food green pork plate, hamburger, barbacoa plate, pizza, salads, bbq with rice and beans and more.')
     const [phoneValue, setPhoneValue] = useState('+44 9999213122')
+    const [preparationTimeValue, setPreparationTimeValue] = useState('30')
     const [openingTimeValue, setOpeningTimeValue] = useState('10:05')
     const [closingTimeValue, setClosingTimeValue] = useState('20:05')
     const [minimumOrderAmount, setMinimumOrderAmount] = useState(0)
@@ -47,11 +48,13 @@ function Profile() {
         const editRestaurant = gql`
             mutation{
                 editRestaurant(
-                    ResturantName:""
-                    username:""
-                    description:""
-                    mobileNo:""
-                    
+                    ResturantName: "${Restaurant.ResturantName}",
+                    username: "${Restaurant.username}",
+                    preparationTime: ${preparationTimeValue},
+                    description: "${descriptionValue}",
+                    minimumOrder: ${minimumOrderAmount},
+                    mobileNo: "${phoneValue}",
+
                 )
                 {
                     Restaurant{
@@ -69,9 +72,11 @@ function Profile() {
             setRestaurant(result.data.editRestaurant.Restaurant)
             setRestaurantID(result.data.editRestaurant.Restaurant.id)
             setloading(false)
+            alert("Restaurant Updated")
         }
         ).catch((error) => {
             console.log(error)
+            alert("Restaurant Not Updated")
 
 
         })
@@ -151,8 +156,7 @@ function Profile() {
             }
         }
     `;
-    useEffect(() => {
-
+    const Get_Restaurant = async () => {
         client.query({
             query: Get_Restaurant_data,
             fetchPolicy: 'no-cache'
@@ -169,8 +173,11 @@ function Profile() {
             setProfileLoading(false)
         }).catch(err => {
             console.log(err)
-        }
-        )
+        })
+    }
+    useEffect(() => {
+
+        Get_Restaurant()
     }, [])
 
 
@@ -342,7 +349,7 @@ function Profile() {
             </div>
 
             <div className='mt-5'>
-                <h2 style={{ fontWeight: '300' }}> Welcome {Restaurant.username}</h2>
+                <h2 style={{ fontWeight: '300' }}> Welcome {Restaurant.ResturantName}</h2>
 
 
 
@@ -587,7 +594,7 @@ function Profile() {
                         <input
                             disabled={!editMinimumOrder}
                             onChange={(e) => {
-                                setMinimumOrderAmount(e.target.value)
+                                setPreparationTimeValue(e.target.value)
                             }}
                             style={{
                                 width: '100%',
@@ -598,7 +605,7 @@ function Profile() {
 
                             }}
                             type={'number'}
-                            value={minimumOrderAmount}
+                            value={preparationTimeValue}
                         />
                         <button
                             onClick={() => {
@@ -625,7 +632,10 @@ function Profile() {
 
                 <div className='row col-lg-8 mt-4' style={{ margin: '0 auto' }}>
                     <button
-
+                        onClick={() => {
+                            UpdateDetail()
+                        }
+                        }
                         style={{
                             margin: '0 auto',
                             width: 'fit-content',
