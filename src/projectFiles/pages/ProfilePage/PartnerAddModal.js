@@ -80,6 +80,17 @@ function PartnerAddModal(props) {
                             // }}
                             style={{ padding: 10, borderRadius: 5, paddingLeft: 20, paddingRight: 20 }}
                             name="cars" id="cars">
+                            {/*{props.partnerList.map((item, index) => {*/}
+                            {/*    return (*/}
+                            {/*                    item.name.toLowerCase() === "gaston" ? null :*/}
+                            {/*                    item.name.toLowerCase() === "deliveroo" ? null:*/}
+                            {/*                    item.name.toLowerCase() === "justeat" ? null :*/}
+                            {/*                    item.name.toLowerCase() === "ubereats" ? null :*/}
+                            {/*                        <option value={"gaston"}>None</option>*/}
+
+                            {/*)*/}
+                            {/*})*/}
+                            {/*}*/}
                             <option value="none">None</option>
                             <option value="gaston">Gaston</option>
                             <option value="deliveroo">Deliveroo</option>

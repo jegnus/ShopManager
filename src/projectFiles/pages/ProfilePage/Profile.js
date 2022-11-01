@@ -286,6 +286,7 @@ function Profile() {
                             partnerList.push(partnerDetails)
                             setShowPartnerAddModal(false)
                         }}
+                        patners={partnerList}
                         RId={Restaurant.id}
                         show={showPartnerAddModal}
                         onHide={() => setShowPartnerAddModal(false)}
