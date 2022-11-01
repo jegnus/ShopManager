@@ -144,22 +144,33 @@ function Login(props) {
                                 type="password"
                                 name="password" />
                         </div>
-                        <button
-                            style={{
-                                alignSelf: 'center',
-                                alignItems: 'center',
-                                // width: '30%',
-                                borderRadius: 5,
-                                border: 'none',
-                                padding: '0.5em 3em',
-                                margin: 5,
-                                color: 'white',
-                                backgroundColor: '#fb6c3e'
-                            }}
-                            onClick={() => userlogin()}
-                        >
-                            Login
-                        </button>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+
+                            <button
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    // width: '30%',
+                                    borderRadius: 5,
+                                    border: 'none',
+                                    padding: '0.5em 3em',
+                                    margin: 5,
+                                    color: 'white',
+                                    backgroundColor: '#fb6c3e'
+                                }}
+                                onClick={() => userlogin()}
+                            >
+                                Login
+                            </button>
+
+                            <p
+
+                                style={{
+                                    marginBottom: 0,
+                                    textDecoration: 'underline',
+                                    cursor: 'pointer'
+                                }}>Forgot password ?</p>
+                        </div>
                     </div>
                     {/* <div
                         style={{

@@ -92,13 +92,13 @@ function Order() {
 
     return (
 
-        <div className='container'>
+        <div className=''>
             {/* <OrderDetailsModal
                 orderdetails={selectedOrder}
                 show={showOrderDetailModal}
                 onHide={() => setShowOrderDetailModal(false)}
             /> */}
-            <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+            {/* <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
 
                     <img
@@ -124,7 +124,7 @@ function Order() {
                         }}
                     >Logout</button>
                 </div>
-            </div>
+            </div> */}
             {/* 
             <h1 style={{ fontSize: 30, textAlign: 'center', margin: '1em 0' }}>Shop Manager</h1> */}
 
@@ -544,9 +544,9 @@ function Order() {
                 </tbody>
             </table> */}
 
-            <div style={{ marginTop: 50, backgroundColor: '#FFF7F4', padding: 10, fontWeight: '700' }}>
+            {/* <div style={{ marginTop: 50, backgroundColor: '#FFF7F4', padding: 10, fontWeight: '700' }}>
                 <p style={{ margin: 0 }}>© 2022 Jegnus UK Ltd</p>
-            </div>
+            </div> */}
         </div>
     )
 }

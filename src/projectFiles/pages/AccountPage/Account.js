@@ -162,7 +162,7 @@ function Account() {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <img style={{ width: '100px' }} src='https://storage.googleapis.com/locus_image_store/assets/logo_1024.png'></img>
                             <h1 style={{ fontSize: '1.5rem', marginBottom: 0 }}>Invoice Reciept</h1>
-                            <p style={{ marginBottom: 0 }}>12/10/2022</p>
+                            <p style={{ marginBottom: 0 }}>30/10/2022</p>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid black', marginBottom: 20, paddingBottom: 20 }}>
                             <div>
@@ -172,7 +172,7 @@ function Account() {
                                     HA3 7RF, United Kingdom</p>
                             </div>
                             <div>
-                                <p style={{ textAlign: 'right', marginBottom: 0 }}>+44 32423423424</p>
+                                <p style={{ textAlign: 'right', marginBottom: 0 }}>+44 7810676749</p>
                                 <p style={{ textAlign: 'right' }}>contact@jegnus.com</p>
                                 {/* <p style={{ textAlign: 'right', marginBottom: 0 }}>Sort Code: 23-69-72</p>
                                 <p style={{ textAlign: 'right', marginBottom: 0 }}>Account Number: 28346298</p> */}
@@ -187,22 +187,22 @@ function Account() {
                                     Golders Green Road
                                     London
                                     NW11 9PS</p>
-                                <p style={{ marginBottom: 0 }}>+44 32423423424</p>
-                                <p style={{}}>contact@jegnus.com</p>
+                                {/* <p style={{ marginBottom: 0 }}>+44 32423423424</p>
+                                <p style={{}}>contact@jegnus.com</p> */}
 
                             </div>
                             <div style={{ width: '200px' }}>
 
                                 {/* <p>Invoice ID: <span style={{ fontWeight: 'bold' }}>#52342342</span></p> */}
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Invoice No:</p>     <p style={{ marginBottom: 0, fontWeight: '700' }}>52342342</p> </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Invoice Date:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>12/10/2022</p> </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Due Date:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>15/10/2022</p> </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Invoice No:</p>     <p style={{ marginBottom: 0, fontWeight: '700' }}>INV-OO18</p> </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Issue Date:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>30/10/2022</p> </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Due Date:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>31/10/2022</p> </div>
                             </div>
                         </div>
                         {/* <div>
                             <p style={{ fontWeight: '700', fontSize: '1.2rem' }}>Orders processed</p>
                         </div> */}
-                        <table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
+                        {/* <table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
                             <thead>
                                 <tr>
                                     <th>#Order ID</th>
@@ -286,17 +286,40 @@ function Account() {
                                     <td style={{ fontWeight: 'bold' }}>6</td>
                                 </tr>
                             </tbody>
+                        </table> */}
+                        <table className='table table-striped table-hover' style={{ width: '100%' }} striped hover>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Unit(£)</th>
+                                    <th>Total(£)</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Food Delivery</td>
+                                    <td>46</td>
+                                    <td>16.50</td>
+                                    <td>759</td>
+                                </tr>
+
+
+
+                            </tbody>
                         </table>
                         <div style={{}}>
-                            <p style={{ textAlign: 'right', marginRight: 10 }}>Total Payable Amount<span style={{ marginLeft: 20, fontSize: 30, fontWeight: '600' }}>£32.00</span></p>
+                            <p style={{ textAlign: 'right', marginRight: 10 }}>Total Payable Amount<span style={{ marginLeft: 20, fontSize: 30, fontWeight: '600' }}>£759.00</span></p>
                         </div>
                         <div>
                             <h4>Payment Details</h4>
                             <div style={{ width: '250px' }}>
 
                                 {/* <p>Invoice ID: <span style={{ fontWeight: 'bold' }}>#52342342</span></p> */}
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Sort Code:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>23-69-72</p> </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Account Number:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>28346298</p> </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Account Name:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>Shrey Patel</p> </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Sort Code:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>608371</p> </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}><p style={{ marginBottom: 0 }}>Account Number:</p>     <p style={{ marginBottom: 0, fontWeight: '500' }}>24260831</p> </div>
                             </div>
                         </div>
                     </div>
