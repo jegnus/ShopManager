@@ -170,7 +170,7 @@ function Profile() {
     const Get_Restaurant_data = gql`
         query{
 
-            Restaurant(username:"indianlounge"){
+            Restaurant(username:"${username}"){
                 id
                 username
                 ResturantName
@@ -204,10 +204,15 @@ function Profile() {
             fetchPolicy: 'no-cache'
         }).then(res => {
             console.log("get restaurant", res.data.Restaurant)
+
             setRestaurant(res.data.Restaurant)
             setTimingsData(res.data.Restaurant.operatingTime)
-            setLogoImageData(res.data.Restaurant.restaurantLogo)
-            setProfileImageData(res.data.Restaurant.restaurantImg)
+            if(res.data.Restaurant.restaurantImg) {
+                setProfileImageData(res.data.Restaurant.restaurantImg)
+            }
+            if(res.data.Restaurant.restaurantLogo) {
+                setLogoImageData(res.data.Restaurant.restaurantLogo)
+            }
             setDescriptionValue(res.data.Restaurant.description)
             setPhoneValue(res.data.Restaurant.mobileNo)
             setRestaurantID(res.data.Restaurant.id)
@@ -384,7 +389,7 @@ function Profile() {
                             </span>
                         </label>
                         {
-                            loading ?
+                            logoImageData ?
                                 <img
 
                                     style={{ width: 100, height: 100, borderRadius: 50, objectFit: 'cover', border: '2px solid white', backgroundColor: 'white' }}
@@ -394,7 +399,7 @@ function Profile() {
                                 <img
 
                                     style={{ width: 100, height: 100, borderRadius: 50, objectFit: 'cover', border: '2px solid white', backgroundColor: 'white' }}
-                                    src={"https://storage.googleapis.com/locus_image_store/" + logoImageData}
+                                    src={Restaurant.restaurantLogo ? "https://storage.googleapis.com/locus_image_store/" + logoImageData: logoImageData}
                                 ></img>
 
 
@@ -413,7 +418,7 @@ function Profile() {
                     <img
                         // className='img-fluid'
                         style={{ height: '350px', width: '100%', objectFit: 'cover' }}
-                        src={"https://storage.googleapis.com/locus_image_store/" + profileImageData} ></img>}
+                        src={Restaurant.restaurantImg?"https://storage.googleapis.com/locus_image_store/" + profileImageData:profileImageData} ></img>}
             </div>
 
             <div className='mt-5'>
