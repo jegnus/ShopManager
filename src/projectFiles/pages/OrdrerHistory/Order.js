@@ -29,7 +29,9 @@ function Order() {
                         orderStatus
                         orderDate
                         OrderRefernceId
+                        patnerOrderId
                         orderType
+                        fee
                         acceptOrder
                         orderedItems{
                             id
@@ -458,7 +460,21 @@ function Order() {
                                             </div>
                                             <p style={{ fontWeight: '700' }}>£ Price</p>
                                         </div>
-                                        {
+                                        <div
+                                            // key={item.id}
+                                            style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <div style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                width: '60%'
+                                            }}>
+                                                <p>{selectedOrder.patnerOrderId}</p>
+                                                <p>{selectedOrder.quantity}</p>
+                                                <p>{selectedOrder.foodName}</p>
+                                            </div>
+                                            <p>£{selectedOrder.fee}</p>
+                                        </div>
+                                        {/* {
                                             selectedOrder.orderedItems ?
                                                 selectedOrder.orderedItems.map((item) => {
                                                     return (
@@ -478,7 +494,7 @@ function Order() {
                                                         </div>
                                                     )
                                                 }) : null
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                             </div>
