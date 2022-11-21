@@ -299,7 +299,7 @@ function Order() {
                                                         alignItems: 'center'
                                                     }}>
                                                         <img
-                                                            src={selectedOrder.orderStatus === 'Preparing' || selectedOrder.orderStatus === 'Prepared' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                            src={selectedOrder.orderStatus === 'Preparing' || selectedOrder.orderStatus === 'Prepared' || selectedOrder.orderStatus === 'Completed' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
                                                             style={{ width: 50, height: 50 }}
                                                         >
                                                         </img>
@@ -322,7 +322,7 @@ function Order() {
                                                         alignItems: 'center'
                                                     }}>
                                                         <img
-                                                            src={selectedOrder.orderStatus === 'Prepared' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
+                                                            src={selectedOrder.orderStatus === 'Prepared' || selectedOrder.orderStatus === 'Completed' ? require('../../../assets/images/OrderPage/correct-solid.png') : require('../../../assets/images/OrderPage/correct-empty.png')}
                                                             style={{ width: 50, height: 50 }}
                                                         >
                                                         </img>
@@ -398,9 +398,9 @@ function Order() {
                                                     </div>
 
                                                     <div style={{ height: 150 }}>
-                                                        {selectedOrder.orderStatus === 'Prepared' ?
+                                                        {selectedOrder.orderStatus === 'Prepared' || selectedOrder.orderStatus === 'Completed' ?
                                                             <p>Prepare
-                                                                Time:{selectedOrder.estimatedCompletionTime.toString().split(".")[0]} </p>
+                                                                Time:{selectedOrder.estimatedCompletionTime.toString()} </p>
                                                             :
                                                             <p>Prepare Time : </p>
                                                         }
