@@ -11,6 +11,10 @@ function Account() {
     const [username, setusername] = useState(localStorage.getItem('user'))
     const [restaurantName, setRestaurantName] = useState('')
     const [restaurantAddress, setRestaurantAddress] = useState('')
+    const [totalOrderAmount, setTotalOrderAmount] = useState(0)
+    const [todaysBillAmount, settodBillaysAmount] = useState(0)
+    const [successfulDeliveries, setSuccessfulDeliveries] = useState(0)
+    const [returnedOrders, setReturnedOrders] = useState(0)
     const handlePrint = () => {
 
         let printContents = document.getElementById('invoiceDiv').innerHTML;
@@ -127,6 +131,34 @@ function Account() {
         setInvoice(data.Restaurant.invoice)
         setRestaurantName(data.Restaurant.ResturantName)
         setRestaurantAddress(data.Restaurant.address)
+
+        let totalAmount = 0
+        let todaysTotal = 0
+        let successDeliveries = 0
+        let canceledDeliveries = 0
+        data.Restaurant.invoice.map((invoice) => {
+
+            totalAmount += parseFloat(invoice.totalAmount)
+
+
+            if (invoice.createdDate === moment().format('YYYY-MM-DD')) {
+                todaysTotal += parseFloat(invoice.totalAmount)
+            }
+
+            invoice.OrderList.map((order) => {
+                if (order.orderStatus === 'Completed') {
+                    successDeliveries += 1
+                }
+                else if (order.orderStatus === 'Cancelled') {
+                    canceledDeliveries += 1
+                }
+            })
+
+        })
+        setTotalOrderAmount(totalAmount)
+        settodBillaysAmount(todaysTotal)
+        setSuccessfulDeliveries(successDeliveries)
+        setReturnedOrders(canceledDeliveries)
         // setallOrders(data.Restaurant.orderlist)
         // setorders(data.Restaurant.orderlist)
         // setloading(false)
@@ -148,24 +180,24 @@ function Account() {
                 <div style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 35, fontWeight: '700' }}>£0</p>
+                        <p style={{ marginBottom: 0, fontSize: 35, fontWeight: '700' }}>£{todaysBillAmount}</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Todays Bill Amount</p>
                     </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%', padding: 30, backgroundColor: '#FFFCFB' }}>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>£0</p>
-                        <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Todays Bill Amount</p>
+                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>£{totalOrderAmount}</p>
+                        <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Total Bill Amount</p>
                     </div>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>0</p>
+                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>{successfulDeliveries}</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Successful Deliveries</p>
                     </div>
                     <div style={{ textAlign: 'center' }}>
 
-                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>0</p>
+                        <p style={{ marginBottom: 0, fontSize: 28, fontWeight: '600' }}>{returnedOrders}</p>
                         <p style={{ marginBottom: 0, fontSize: 14, color: '#7F7F7F' }}>Returned Orders</p>
                     </div>
 
